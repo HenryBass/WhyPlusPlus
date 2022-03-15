@@ -3,11 +3,16 @@ mem = [0] * 128
 base32 = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ12345678")
 ops = ["+", "-", "="]
 
-regs = [0, 0, 0]
-inst = "="
-reg = 0
+a = 0
+r = True
+d = 0
+pointer = 0
 
-code = list("QAB1HTRHE")
+inst = "="
+
+exit = False
+
+code = list("vABCDEFGB*!")
 
 for i in range(0, len(code)):
 	mem[i] = code[i]
@@ -15,21 +20,39 @@ for i in range(0, len(code)):
 # first 64 is code
 # last 64 is mem
 
-def execute(pointer):
+def execute():
+	global inst
+	global a
+	global mem
+	global r
+	global exit
+	global pointer
+
 	p = mem[pointer]
-	print(p)
 	if p in base32:
 		if inst == "=":
-			regs[reg] = base32.index(p)
+			a = base32.index(p)
 		elif inst == "+":
-			regs[reg] += base32.index(p)
+			a += base32.index(p)
 		else:
-			regs[reg] -= base32.index(p)
-	#elif p in ops:
-	#	inst = p
-	print(regs)
+			a -= base32.index(p)
+	elif p in ops:
+		inst = str(p)
+	elif p == "^":
+		r = False
+	elif p == "v":
+		r = True
+	elif p == "*":
+		if r:
+			a = base32.index(pointer)
+		else:
+			pointer = a
+	elif p == "!":
+		exit = True
+	print(pointer)
 
 
 
-for i in range(0, len(code)):
-	execute(i)
+while exit == False:
+	execute()
+	pointer += 1
