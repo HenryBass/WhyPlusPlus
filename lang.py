@@ -12,7 +12,7 @@ inst = "="
 
 exit = False
 
-code = list("^A$B@%!")
+code = list("^+87!")
 
 for i in range(0, len(code)):
  mem[i] = code[i]
