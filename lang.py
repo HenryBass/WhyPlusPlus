@@ -10,7 +10,7 @@ inst = "="
 
 exit = False
 
-#code = list("^=B v$+B^ & =A +87 % =B $ v$^ +B & -B +87 % !")
+code = input("WhyPlusPlus >>>")
 
 mem = list("^A&B&C&D!")
 
@@ -18,8 +18,6 @@ mem += [0] * len(mem)
 
 data = int(len(mem)/2)
 
-# first 64 is code
-# last 64 is mem
 
 def execute():
  global inst
@@ -42,10 +40,9 @@ def execute():
  elif p in ops:
   inst = str(p)
  elif p == "^":
-  if r:
-    r = False
-  else:
-    r = True
+  r = False
+ elif p == "v":
+  r = True
  elif p == "*":
   if r:
    a = pointer
